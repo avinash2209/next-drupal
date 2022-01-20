@@ -91,3 +91,7 @@ examples/certificates/*
 drupal/web/sites/default/settings.local.php
 .next
 drupal/web/phpunit.xml
+
+# User-specific stuff:
+.idea/
+.vscode/

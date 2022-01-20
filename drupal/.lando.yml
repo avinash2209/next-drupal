@@ -1,0 +1,8 @@
+name: eeashukla
+recipe: acquia
+config:
+  webroot: web
+  acli_version: latest
+  ah_application_uuid: 42017c7c-428e-4979-b7ae-0ec2568ed757
+  ah_site_group: eeashukla
+  php: '7.4'
