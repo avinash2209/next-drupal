@@ -26,6 +26,6 @@
 /.editorconfig
 /.gitattributes
 
-/oauth-keys/*.key
+/keys/*.key
 /docroot/sites/default/settings.local.php
 /docroot/sites/default/services.local.yml
