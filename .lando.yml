@@ -1,0 +1,46 @@
+name: eeashukla
+recipe: acquia
+config:
+  webroot: 'docroot'
+  acli_version: latest
+  ah_application_uuid: 42017c7c-428e-4979-b7ae-0ec2568ed757
+  ah_site_group: eeashukla
+  xdebug: true
+  php: '7.4'
+
+services:
+  appserver:
+    xdebug: true
+    app_mount: delegated
+    ssl: true
+    type: php:7.4
+    composer_version: 1-latest
+    build_as_root:
+      - apt-get update -y
+      - apt-get install netcat -y
+      - apt-get install vim -y
+    build:
+      - bash /app/.lando/scripts/install-npm.sh
+    run_as_root:
+      # By default disable XDEBUG, we need it enabled to ensure all configurations are loaded.
+      # Post this to enable disable lando xdebug-on and lando xdebug-off can be used.
+      - rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && service apache2 reload
+      - chown www-data:www-data /run/host-services/ssh-auth.sock
+      - chmod g+w /run/host-services/ssh-auth.sock
+    overrides:
+      environment:
+        PHP_IDE_CONFIG: "serverName=eeashukla"
+        SSH_AUTH_SOCK: /run/host-services/ssh-auth.sock
+      # Pass SSH keys.
+      volumes:
+        - type: bind
+          # Linux user: add 'export LANDO_SSH_AUTH_SOCK="${SSH_AUTH_SOCK}"' at the end of your ~/.bashrc:
+          # Mac user: MacOS specific path is here as the variable default value, nothing to do.
+          source: "${LANDO_SSH_AUTH_SOCK:-/run/host-services/ssh-auth.sock}"
+          target: /run/host-services/ssh-auth.sock
+
+proxy:
+  #  edge:
+  #    - "*.varnish.eeashukla.lndo.site"
+  appserver:
+    - "eeashukla.lndo.site"
