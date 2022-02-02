@@ -15,8 +15,8 @@ on:
 
 defaults:
   run:
+    working-directory: ./drupal
     shell: bash
-  working-directory: ./drupal
 
 jobs:
   full:
