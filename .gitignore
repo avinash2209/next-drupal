@@ -88,9 +88,9 @@ examples/**/cypress/videos
 *__clone*
 dist
 examples/certificates/*
-drupal/web/sites/default/settings.local.php
+drupal/docroot/sites/default/settings.local.php
 .next
-drupal/web/phpunit.xml
+drupal/docroot/phpunit.xml
 
 # User-specific stuff:
 .idea/

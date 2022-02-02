@@ -20,9 +20,12 @@
     }
   ],
   "require": {
+    "acquia/blt": "^13.0",
+    "alexku/blt-github-actions": "dev-master",
     "composer/installers": "^1.7",
     "cweagans/composer-patches": "^1.7",
     "drupal/admin_toolbar": "^3.0",
+    "drupal/config_split": "^2.0@beta",
     "drupal/console": "^1.0.2",
     "drupal/core-composer-scaffold": "^9",
     "drupal/core-project-message": "^9",
@@ -69,6 +72,17 @@
     "sort-packages": true,
     "platform": {
         "php": "7.4"
+    },
+    "platform-check": false,
+    "allow-plugins": {
+      "composer/installers": true,
+      "drupal/core-project-message": true,
+      "cweagans/composer-patches": true,
+      "zaporylie/composer-drupal-optimizations": true,
+      "drupal/core-composer-scaffold": true,
+      "acquia/blt": true,
+      "drupal/console-extend-plugin": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
   },
   "autoload": {

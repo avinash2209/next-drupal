@@ -59,12 +59,12 @@ jobs:
           COMPOSER_MEMORY_LIMIT=-1 composer require --dev phpspec/prophecy-phpunit:^2 -W
         if: ${{ startsWith(matrix.drupal, '9') }}
       - name: Copy module
-        run: cp -R ../next-drupal/modules/next ~/drupal/web/modules/next
+        run: cp -R ../next-drupal/modules/next ~/drupal/docroot/modules/next
       - name: Run php built-in server
-        run: php -S 127.0.0.1:8080 -t ~/drupal/web &
+        run: php -S 127.0.0.1:8080 -t ~/drupal/docroot &
       - name: Run PHPUnit
         run: |
-          cd ~/drupal/web
+          cd ~/drupal/docroot
           ../vendor/bin/phpunit -c core modules/next
         env:
           SYMFONY_DEPRECATIONS_HELPER: weak

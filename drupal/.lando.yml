@@ -44,3 +44,51 @@ proxy:
   #    - "*.varnish.eeashukla.lndo.site"
   appserver:
     - "eeashukla.lndo.site"
+
+tooling:
+  blt:
+    service: appserver
+    cmd: /app/vendor/acquia/blt/bin/blt
+  npm:
+    service: appserver
+    cmd: npm
+  xdebug-on:
+    service: appserver
+    description: Enable xdebug for Apache.
+    cmd: docker-php-ext-enable xdebug && service apache2 reload
+    user: root
+  xdebug-off:
+    service: appserver
+    description: Disable xdebug for Apache.
+    cmd: rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && service apache2 reload
+    user: root
+  behat-build:
+    description: build pre-requisites for behat testing.
+    cmd:
+      - appserver: cd /app/behat_rework && composer install
+      - appserver: cd /app/behat_rework/bin && npm install
+      - appserver: cd /app/behat_rework/ && ./behat-build.sh --rebuild=TRUE
+  behat-run:
+    description: runs behat tests
+    service: appserver
+    cmd: cd /app/behat_rework && ./bin/behat -vvv -c behat-lando.yml --format pretty
+  logs-drupal:
+    service: appserver
+    description: Displays and tails Drupal logs using syslog module (because drush wd-show no longer supports tail)
+    cmd:
+      - /app/.lando/scripts/logs-drupal.sh
+    user: root
+  ssh-fix:
+    service: appserver
+    description: Fix ssh auth sock permission for MacOS users. Lando rebuild fixes the problem as well.
+    cmd: "/bin/chgrp www-data /run/host-services/ssh-auth.sock && /bin/chmod g+w /run/host-services/ssh-auth.sock"
+    user: root
+  npm-fix:
+    service: appserver
+    description: Re-install the old / supported npm and node.
+    cmd: "bash /app/.lando/scripts/install-npm.sh"
+    user: root
+  create-databases:
+    service: appserver
+    description: Create database for all the supported sites.
+    cmd: "bash /app/.lando/scripts/provision/database.sh"

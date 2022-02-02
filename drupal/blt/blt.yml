@@ -1,0 +1,72 @@
+project:
+  machine_name: app
+  prefix: (EEA)
+  human_name: eeashukla
+  profile:
+    name: standard
+git:
+  default_branch: develop
+  remotes:
+    - 'eeashukla@svn-21939.prod.hosting.acquia.com:eeashukla.git'
+  hooks:
+    pre-push: false
+deploy:
+  tag_source: true
+  gitignore_file: '${repo.root}/blt/config/.gitignore'
+drush:
+  aliases:
+    remote: '${project.machine_name}.test'
+    local: self
+    ci: self
+  default_alias: '${drush.aliases.local}'
+modules:
+  local:
+    enable: [views_ui]
+    uninstall: [acsf, acquia_connector, shield]
+  ci:
+    enable: {  }
+    uninstall: [acquia_connector, shield]
+  dev:
+    enable: [acquia_connector, shield]
+    uninstall: {  }
+  test:
+    enable: [acquia_connector, shield]
+    uninstall: [views_ui]
+  prod:
+    enable: [acquia_connector, shield, dynamic_page_cache]
+    uninstall: [views_ui]
+  uat:
+    enable: [acquia_connector, shield, dynamic_page_cache]
+    uninstall: [views_ui]
+  qa:
+    enable: [acquia_connector, shield]
+    uninstall: [views_ui]
+  pprod:
+    enable: [acquia_connector, shield, dynamic_page_cache]
+    uninstall: [views_ui]
+command-hooks:
+  frontend-reqs:
+    dir: '${repo.root}'
+    command: 'vendor/bin/blt js:setup'
+  frontend-assets:
+    dir: '${repo.root}'
+    command: 'vendor/bin/blt js:build'
+  pre-config-import:
+    dir: '${docroot}'
+    command: drush entity:delete shortcut_set
+  post-deploy-build:
+    dir: '${repo.root}/blt/scripts'
+    command: 'bash post-deploy-build.sh ${deploy.dir}'
+  post-setup-build:
+    dir: '${docroot}'
+    command: 'echo ''No post-setup build configured.'''
+  post-deploy:
+    dir: '${docroot}'
+    command: 'echo ''No post-deploy build configured.'''
+import: '${repo.root}/blt/setup.local.xml'
+cloud:
+  appId: 42017c7c-428e-4979-b7ae-0ec2568ed757
+validate:
+  yaml:
+    fileset: []
+  twig:
