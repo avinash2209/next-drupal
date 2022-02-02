@@ -56,16 +56,15 @@ jobs:
       - name: Add phpspec/prophecy-phpunit
         run: |
           cd ~/drupal
-          ls -alh
           COMPOSER_MEMORY_LIMIT=-1 composer require --dev phpspec/prophecy-phpunit:^2 -W
         if: ${{ startsWith(matrix.drupal, '9') }}
       - name: Copy module
-        run: cp -R ../next-drupal/modules/next ~/drupal/docroot/modules/next
+        run: cp -R ../next-drupal/modules/next ~/drupal/web/modules/next
       - name: Run php built-in server
-        run: php -S 127.0.0.1:8080 -t ~/drupal/docroot &
+        run: php -S 127.0.0.1:8080 -t ~/drupal/web &
       - name: Run PHPUnit
         run: |
-          cd ~/drupal/docroot
+          cd ~/drupal/web
           ../vendor/bin/phpunit -c core modules/next
         env:
           SYMFONY_DEPRECATIONS_HELPER: weak
