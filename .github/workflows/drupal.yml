@@ -56,6 +56,7 @@ jobs:
       - name: Add phpspec/prophecy-phpunit
         run: |
           cd ~/drupal
+          ls -alh
           COMPOSER_MEMORY_LIMIT=-1 composer require --dev phpspec/prophecy-phpunit:^2 -W
         if: ${{ startsWith(matrix.drupal, '9') }}
       - name: Copy module
