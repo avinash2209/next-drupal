@@ -22,7 +22,7 @@ jobs:
   full:
     name: Full (Build, Validate, Test, Deploy)
 
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
     container:
       image: devwithlando/php:7.4-fpm-4
 
