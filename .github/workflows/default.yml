@@ -15,14 +15,13 @@ on:
 
 defaults:
   run:
-    working-directory: ./drupal
     shell: bash
 
 jobs:
-  defaults:
-    run:
-      working-directory: ./drupal
   full:
+    defaults:
+      run:
+        working-directory: ./drupal
     name: Full (Build, Validate, Test, Deploy)
 
     runs-on: ubuntu-latest
