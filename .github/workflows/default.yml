@@ -19,6 +19,9 @@ defaults:
     shell: bash
 
 jobs:
+  defaults:
+    run:
+      working-directory: ./drupal
   full:
     name: Full (Build, Validate, Test, Deploy)
 
@@ -46,10 +49,6 @@ jobs:
       SSH_DEPLOYMENT_KEY: ${{ secrets.BLT_SSH_DEPLOYMENT_KEY }}
 
     steps:
-      defaults:
-        run:
-          shell: bash
-          working-directory: ./drupal
       # Using older version of actions/checkout to be able to use Ubuntu 16.04
       - uses: actions/checkout@v1
 
