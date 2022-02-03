@@ -22,9 +22,9 @@ jobs:
   full:
     name: Full (Build, Validate, Test, Deploy)
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-16.04
     container:
-      image: devwithlando/php:7.4-fpm-4
+      image: acquia/ads-local:lando-php-7.3-nodejs-12
 
     services:
       database:
